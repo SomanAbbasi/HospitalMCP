@@ -19,18 +19,36 @@ async def main() -> None:
 
             tools = await session.list_tools()
 
-            print("Available tools:")
+            print("\nAvailable tools:")
 
             for tool in tools.tools:
-                print(f"- {tool.name}: {tool.description}")
+                print(f"- {tool.name}")
+                print(f"  Description: {tool.description}")
+                print(f"  Input schema: {tool.inputSchema}")
 
-            result = await session.call_tool(
+            doctor_search = await session.call_tool(
                 "search_hospital_doctors",
                 arguments={"specialty": "Cardiology"},
             )
 
-            print("\nSearch result:")
-            print(result)
+            print("\nCardiology search:")
+            print(doctor_search)
+
+            doctor = await session.call_tool(
+                "get_hospital_doctor",
+                arguments={"doctor_id": "D001"},
+            )
+
+            print("\nDoctor D001:")
+            print(doctor)
+
+            availability = await session.call_tool(
+                "get_hospital_doctor_availability",
+                arguments={"doctor_id": "D001"},
+            )
+
+            print("\nAvailability:")
+            print(availability)
 
 
 if __name__ == "__main__":

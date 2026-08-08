@@ -36,6 +36,26 @@ DOCTORS: list[Doctor] = [
     },
 ]
 
+DOCTOR_AVAILABILITY: dict[str, list[str]] = {
+    "D001": [
+        "2026-08-10 09:00",
+        "2026-08-10 10:00",
+        "2026-08-10 14:00",
+    ],
+    "D002": [
+        "2026-08-10 11:00",
+        "2026-08-10 15:00",
+    ],
+    "D003": [
+        "2026-08-10 09:00",
+        "2026-08-10 13:00",
+    ],
+    "D004": [
+        "2026-08-10 10:00",
+        "2026-08-10 16:00",
+    ],
+}
+
 
 def search_doctors(specialty: str) -> list[Doctor]:
     normalized_specialty = specialty.strip().lower()
@@ -55,3 +75,8 @@ def get_doctor(doctor_id: str) -> Doctor | None:
             return doctor
 
     return None
+
+def get_doctor_availability(doctor_id: str) -> list[str]:
+    normalized_id = doctor_id.strip().upper()
+
+    return DOCTOR_AVAILABILITY.get(normalized_id, [])
