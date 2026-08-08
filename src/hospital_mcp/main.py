@@ -1,5 +1,5 @@
 
-from doctors import get_doctor, search_doctors
+from hospital_mcp.doctors import get_doctor, search_doctors
 
 
 def main() -> None:

@@ -1,9 +1,8 @@
-from mcp.server.fastmcp import FastMCP
-from mcp.server.fastmcp.prompts import base
+from mcp.server.mcpserver import MCPServer
 
-from doctors import search_doctors, get_doctor, get_doctor_availability
+from hospital_mcp.doctors import get_doctor, get_doctor_availability, search_doctors
 
-mcp = FastMCP("Hospital MCP Server")
+mcp = MCPServer("Hospital MCP Server")
 
 
 @mcp.tool()
@@ -59,21 +58,16 @@ def hospital_info() -> str:
 
 
 @mcp.prompt()
-def doctor_consultation(question: str, specialty: str) -> list[base.Message]:
+def doctor_consultation(question: str, specialty: str) -> list[str]:
     """Prepare a structured prompt for a hospital doctor consultation."""
 
     return [
-        base.UserMessage(
-            content=base.TextContent(
-                type="text",
-                text=(
-                    f"I need help with a hospital consultation.\n\n"
-                    f"Patient question: {question}\n"
-                    f"Relevant specialty: {specialty}\n\n"
-                    "Analyze the request carefully and identify what "
-                    "information should be gathered next."
-                ),
-            )
+        (
+            f"I need help with a hospital consultation.\n\n"
+            f"Patient question: {question}\n"
+            f"Relevant specialty: {specialty}\n\n"
+            "Analyze the request carefully and identify what "
+            "information should be gathered next."
         )
     ]
 

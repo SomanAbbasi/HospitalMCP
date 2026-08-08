@@ -1,16 +1,13 @@
 import asyncio
-from pathlib import Path
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 
 async def main() -> None:
-    server_path = Path(__file__).with_name("mcp_server.py")
-
     server_params = StdioServerParameters(
         command="uv",
-        args=["run", "python", str(server_path)],
+        args=["run", "python", "-m", "hospital_mcp.mcp_server"],
     )
 
     async with stdio_client(server_params) as (read_stream, write_stream):
@@ -24,7 +21,7 @@ async def main() -> None:
             for tool in tools.tools:
                 print(f"- {tool.name}")
                 print(f"  Description: {tool.description}")
-                print(f"  Input schema: {tool.inputSchema}")
+                print(f"  Input schema: {tool.input_schema}")
 
             resources = await session.list_resources()
 
