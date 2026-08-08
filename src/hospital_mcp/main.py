@@ -1,7 +1,17 @@
+
+from doctors import get_doctor, search_doctors
+
+
 def main() -> None:
-    print("Hospital MCP Server project initialized")
+    cardiologists = search_doctors("cardiology")
+
+    print("Cardiologists:")
+    for doctor in cardiologists:
+        print(doctor)
+
+    print("\nDoctor D001:")
+    print(get_doctor("D001"))
 
 
 if __name__ == "__main__":
     main()
-    
