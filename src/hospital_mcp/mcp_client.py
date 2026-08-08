@@ -26,6 +26,19 @@ async def main() -> None:
                 print(f"  Description: {tool.description}")
                 print(f"  Input schema: {tool.inputSchema}")
 
+            resources = await session.list_resources()
+
+            print("\nAvailable resources:")
+
+            for resource in resources.resources:
+                print(f"- {resource.uri}")
+                print(f"  Name: {resource.name}")
+
+            specialties = await session.read_resource("hospital://specialties")
+
+            print("\nHospital specialties:")
+            print(specialties)
+
             doctor_search = await session.call_tool(
                 "search_hospital_doctors",
                 arguments={"specialty": "Cardiology"},
