@@ -1,4 +1,5 @@
 from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp.prompts import base
 
 from doctors import search_doctors, get_doctor, get_doctor_availability
 
@@ -55,6 +56,26 @@ def hospital_info() -> str:
         Emergency Department:
         24/7
         """
+
+
+@mcp.prompt()
+def doctor_consultation(question: str, specialty: str) -> list[base.Message]:
+    """Prepare a structured prompt for a hospital doctor consultation."""
+
+    return [
+        base.UserMessage(
+            content=base.TextContent(
+                type="text",
+                text=(
+                    f"I need help with a hospital consultation.\n\n"
+                    f"Patient question: {question}\n"
+                    f"Relevant specialty: {specialty}\n\n"
+                    "Analyze the request carefully and identify what "
+                    "information should be gathered next."
+                ),
+            )
+        )
+    ]
 
 
 if __name__ == "__main__":

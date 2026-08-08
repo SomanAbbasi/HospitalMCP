@@ -34,6 +34,27 @@ async def main() -> None:
                 print(f"- {resource.uri}")
                 print(f"  Name: {resource.name}")
 
+            prompts = await session.list_prompts()
+
+            print("\nAvailable prompts:")
+
+            for prompt in prompts.prompts:
+                print(f"- {prompt.name}")
+                print(f"  Description: {prompt.description}")
+
+            prompt = await session.get_prompt(
+                "doctor_consultation",
+                arguments={
+                    "question": "Patient has recurring chest pain.",
+                    "specialty": "Cardiology",
+                },
+            )
+
+            print("\nDoctor consultation prompt:")
+
+            for message in prompt.messages:
+                print(message)
+
             specialties = await session.read_resource("hospital://specialties")
 
             print("\nHospital specialties:")
